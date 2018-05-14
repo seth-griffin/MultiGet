@@ -60,7 +60,7 @@ class FileDownloader
         }
 
         if($httpCode != 206) {
-            throw new Exception("Got non-200 OK response code: " . $httpCode);
+            throw new Exception("Got non-206 OK Partial content response code: " . $httpCode);
         }
 
         return $data;

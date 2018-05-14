@@ -13,13 +13,13 @@ if(empty($options) || empty($options['url'])) {
 } 
 else {
     $url = $options['url']; 
-    $MiB = 1024;
+    $MiB = 1048576;
     $total_MiB = 4;
     $max_size = $MiB * $total_MiB;
     $destination = basename($url);
     $data = null;
     $range_floor = 0;
-    $range_ceiling = 1024;
+    $range_ceiling = 1048576;
     $range_increment = $range_ceiling;
 
     if(!empty($options['outputFileName'])) {

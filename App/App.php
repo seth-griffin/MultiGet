@@ -27,7 +27,7 @@ class App {
     /**
      * MiB Unit Definition
      */
-    const MiB = 1024;
+    const MiB = 1048576;
 
     /**
      * Application Usage Example

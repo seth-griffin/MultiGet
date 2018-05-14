@@ -1,0 +1,53 @@
+#!/usr/bin/php
+<?php
+
+if(php_sapi_name() !== 'cli') {
+    exit(0);
+}
+
+$options = getopt(null, ['url:', 'outputFileName::']);
+
+if(empty($options) || empty($options['url'])) {
+    echo 'Missing required parameter --url' . PHP_EOL;
+    echo 'Usage: ./spike --url=http://example.com/fileName.ext [--outputFileName=otherFileName.ext]' . PHP_EOL;
+} 
+else {
+    $url = $options['url']; 
+    $MiB = 1024;
+    $total_MiB = 4;
+    $max_size = $MiB * $total_MiB;
+    $destination = basename($url);
+    $data = null;
+    $range_floor = 0;
+    $range_ceiling = 1024;
+    $range_increment = $range_ceiling;
+
+    if(!empty($options['outputFileName'])) {
+        $destination = $options['outputFileName'];
+    }
+
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+    file_put_contents($destination, null);
+    $fileHandle = fopen($destination, 'w');
+
+    while(filesize($destination) < $max_size) {
+        $range = $range_floor . '-' . ($range_ceiling - 1);
+        echo 'Fetching ' . $range . ' Bytes (';
+        curl_setopt($ch, CURLOPT_RANGE, $range);
+        $data = curl_exec ($ch);
+        $error = curl_error($ch);
+        fwrite($fileHandle, $data);
+
+        $range_floor = $range_ceiling;
+        $range_ceiling += $range_increment;
+        clearstatcache();
+        echo filesize($destination) . ' total fetched)' . PHP_EOL;
+    }
+
+    curl_close ($ch);
+    fclose($fileHandle);
+}

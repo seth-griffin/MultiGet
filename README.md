@@ -8,14 +8,14 @@
 ```
 .
 ├── App
-│   ├── App.php                           Main app class file
+│   ├── App.php                         Main app class file
 │   ├── Http
-│   │   └── FileDownloader.php      FileDownloader class file
+│   │   └── FileDownloader.php          FileDownloader class file
 │   ├── IO                          
-│   │   └── FileWriter.php               FileWriter class file
-│   └── multiGet.php                     Final solution cli wrapper
-├── README.md                            This readme file
-└── spike                                A spike solution. Execute on the terminal with ./spike after using chmod to make it executable
+│   │   └── FileWriter.php              FileWriter class file
+│   └── multiGet.php                    Final solution cli wrapper
+├── README.md                           This readme file
+└── spike                               A spike solution. Execute on the terminal with ./spike after using chmod to make it executable
 ```
 
 ### Design Decisions

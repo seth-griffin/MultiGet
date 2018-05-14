@@ -53,9 +53,14 @@ class FileDownloader
         $range = $rangeMin . '-' . ($rangeMax - 1);
         curl_setopt($this->ch, CURLOPT_RANGE, $range);
         $data = curl_exec ($this->ch);
+        $httpCode = curl_getinfo($this->ch, CURLINFO_HTTP_CODE);
 
         if($data === false) {
             throw new Exception(curl_error($this->ch));
+        }
+
+        if($httpCode != 206) {
+            throw new Exception("Got non-200 OK response code: " . $httpCode);
         }
 
         return $data;
